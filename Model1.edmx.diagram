@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7ca6e2fb5ff44f50be80ebdc5b7ad725" Name="Diagram1">
+        <EntityTypeShape EntityType="DATABASE1Model.Automobile" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DATABASE1Model.Automobile_has_Violation" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DATABASE1Model.Driver" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DATABASE1Model.Violation" Width="1.5" PointX="4.125" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="DATABASE1Model.FK__Automobile_has_V__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="DATABASE1Model.FK__Automobil__Viola__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="DATABASE1Model.Documents" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

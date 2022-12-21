@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<WebApplication2.seaq_Result>
+
+<meta charset="utf-8">
+
+@{
+    ViewBag.Title = "История поездок по дате | Прокат автомобилей";
+}
+
+@* <h2>История поездок по дате</h2> *@
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.State_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Drivers_FIO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_of_the_violation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quontity)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.State_number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drivers_FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_of_the_violation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quontity)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!--@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}-->

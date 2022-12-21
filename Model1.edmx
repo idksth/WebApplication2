@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DATABASE1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Automobile">
+          <Key>
+            <PropertyRef Name="Series_of_the_technical_passport" />
+            <PropertyRef Name="Number_of_the_technical_passport" />
+          </Key>
+          <Property Name="Series_of_the_technical_passport" Type="int" Nullable="false" />
+          <Property Name="Number_of_the_technical_passport" Type="int" Nullable="false" />
+          <Property Name="Drivers_FIO" Type="varchar(max)" />
+          <Property Name="State_number" Type="varchar(max)" />
+          <Property Name="Drivers_address" Type="varchar(max)" />
+          <Property Name="Brand" Type="varchar(max)" />
+          <Property Name="Engine_number" Type="varchar(max)" />
+          <Property Name="Body_number" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Automobile_has_Violation">
+          <Key>
+            <PropertyRef Name="Automobile_Number_of_the_technical_passport" />
+            <PropertyRef Name="Automobile_Series_of_the_technical_passport" />
+            <PropertyRef Name="Violation_Code" />
+          </Key>
+          <Property Name="Automobile_Number_of_the_technical_passport" Type="int" Nullable="false" />
+          <Property Name="Automobile_Series_of_the_technical_passport" Type="int" Nullable="false" />
+          <Property Name="Violation_Code" Type="int" Nullable="false" />
+          <Property Name="Date_of_the_violation" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="Automobile_Number_of_the_technical_passport" />
+            <PropertyRef Name="Automobile_Series_of_the_technical_passport" />
+            <PropertyRef Name="Driver_Number_of_the_drivers_license" />
+            <PropertyRef Name="Driver_Series_of_the_drivers_license" />
+          </Key>
+          <Property Name="Automobile_Number_of_the_technical_passport" Type="int" Nullable="false" />
+          <Property Name="Automobile_Series_of_the_technical_passport" Type="int" Nullable="false" />
+          <Property Name="Driver_Number_of_the_drivers_license" Type="int" Nullable="false" />
+          <Property Name="Driver_Series_of_the_drivers_license" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="Series_of_the_drivers_license" />
+            <PropertyRef Name="Number_of_the_drivers_license" />
+          </Key>
+          <Property Name="Series_of_the_drivers_license" Type="int" Nullable="false" />
+          <Property Name="Number_of_the_drivers_license" Type="int" Nullable="false" />
+          <Property Name="FIO" Type="varchar(max)" />
+          <Property Name="Address" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Violation">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__Automobil__Viola__5DCAEF64">
+          <End Role="Violation" Type="Self.Violation" Multiplicity="1" />
+          <End Role="Automobile_has_Violation" Type="Self.Automobile_has_Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Violation">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Automobile_has_Violation">
+              <PropertyRef Name="Violation_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Automobile_has_V__5CD6CB2B">
+          <End Role="Automobile" Type="Self.Automobile" Multiplicity="1" />
+          <End Role="Automobile_has_Violation" Type="Self.Automobile_has_Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automobile">
+              <PropertyRef Name="Series_of_the_technical_passport" />
+              <PropertyRef Name="Number_of_the_technical_passport" />
+            </Principal>
+            <Dependent Role="Automobile_has_Violation">
+              <PropertyRef Name="Automobile_Series_of_the_technical_passport" />
+              <PropertyRef Name="Automobile_Number_of_the_technical_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documents__2E1BDC42">
+          <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="Series_of_the_drivers_license" />
+              <PropertyRef Name="Number_of_the_drivers_license" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="Driver_Series_of_the_drivers_license" />
+              <PropertyRef Name="Driver_Number_of_the_drivers_license" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documents__2F10007B">
+          <End Role="Automobile" Type="Self.Automobile" Multiplicity="1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automobile">
+              <PropertyRef Name="Series_of_the_technical_passport" />
+              <PropertyRef Name="Number_of_the_technical_passport" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="Automobile_Series_of_the_technical_passport" />
+              <PropertyRef Name="Automobile_Number_of_the_technical_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="seaq" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Date_of_the_violation_start" Type="date" Mode="In" />
+          <Parameter Name="Date_of_the_violation_end" Type="date" Mode="In" />
+        </Function>
+        <Function Name="seaq2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name_of_the_violation" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Brand_of_the_automobile" Type="varchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище DATABASE1ModelContainer">
+          <EntitySet Name="Automobile" EntityType="Self.Automobile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Automobile_has_Violation" EntityType="Self.Automobile_has_Violation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Violation" EntityType="Self.Violation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Automobil__Viola__5DCAEF64" Association="Self.FK__Automobil__Viola__5DCAEF64">
+            <End Role="Violation" EntitySet="Violation" />
+            <End Role="Automobile_has_Violation" EntitySet="Automobile_has_Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Automobile_has_V__5CD6CB2B" Association="Self.FK__Automobile_has_V__5CD6CB2B">
+            <End Role="Automobile" EntitySet="Automobile" />
+            <End Role="Automobile_has_Violation" EntitySet="Automobile_has_Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documents__2E1BDC42" Association="Self.FK__Documents__2E1BDC42">
+            <End Role="Driver" EntitySet="Driver" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documents__2F10007B" Association="Self.FK__Documents__2F10007B">
+            <End Role="Automobile" EntitySet="Automobile" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DATABASE1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Automobile">
+          <Key>
+            <PropertyRef Name="Series_of_the_technical_passport" />
+            <PropertyRef Name="Number_of_the_technical_passport" />
+          </Key>
+          <Property Name="Series_of_the_technical_passport" Type="Int32" Nullable="false" />
+          <Property Name="Number_of_the_technical_passport" Type="Int32" Nullable="false" />
+          <Property Name="Drivers_FIO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="State_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Drivers_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Engine_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Body_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Automobile_has_Violation" Relationship="Self.FK__Automobile_has_V__5CD6CB2B" FromRole="Automobile" ToRole="Automobile_has_Violation" />
+          <NavigationProperty Name="Driver" Relationship="Self.Documents" FromRole="Automobile" ToRole="Driver" />
+        </EntityType>
+        <EntityType Name="Automobile_has_Violation">
+          <Key>
+            <PropertyRef Name="Automobile_Number_of_the_technical_passport" />
+            <PropertyRef Name="Automobile_Series_of_the_technical_passport" />
+            <PropertyRef Name="Violation_Code" />
+          </Key>
+          <Property Name="Automobile_Number_of_the_technical_passport" Type="Int32" Nullable="false" />
+          <Property Name="Automobile_Series_of_the_technical_passport" Type="Int32" Nullable="false" />
+          <Property Name="Violation_Code" Type="Int32" Nullable="false" />
+          <Property Name="Date_of_the_violation" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Automobile" Relationship="Self.FK__Automobile_has_V__5CD6CB2B" FromRole="Automobile_has_Violation" ToRole="Automobile" />
+          <NavigationProperty Name="Violation" Relationship="Self.FK__Automobil__Viola__5DCAEF64" FromRole="Automobile_has_Violation" ToRole="Violation" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="Series_of_the_drivers_license" />
+            <PropertyRef Name="Number_of_the_drivers_license" />
+          </Key>
+          <Property Name="Series_of_the_drivers_license" Type="Int32" Nullable="false" />
+          <Property Name="Number_of_the_drivers_license" Type="Int32" Nullable="false" />
+          <Property Name="FIO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Automobile" Relationship="Self.Documents" FromRole="Driver" ToRole="Automobile" />
+        </EntityType>
+        <EntityType Name="Violation">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Automobile_has_Violation" Relationship="Self.FK__Automobil__Viola__5DCAEF64" FromRole="Violation" ToRole="Automobile_has_Violation" />
+        </EntityType>
+        <Association Name="FK__Automobile_has_V__5CD6CB2B">
+          <End Role="Automobile" Type="Self.Automobile" Multiplicity="1" />
+          <End Role="Automobile_has_Violation" Type="Self.Automobile_has_Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Automobile">
+              <PropertyRef Name="Series_of_the_technical_passport" />
+              <PropertyRef Name="Number_of_the_technical_passport" />
+            </Principal>
+            <Dependent Role="Automobile_has_Violation">
+              <PropertyRef Name="Automobile_Series_of_the_technical_passport" />
+              <PropertyRef Name="Automobile_Number_of_the_technical_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Automobil__Viola__5DCAEF64">
+          <End Role="Violation" Type="Self.Violation" Multiplicity="1" />
+          <End Role="Automobile_has_Violation" Type="Self.Automobile_has_Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Violation">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Automobile_has_Violation">
+              <PropertyRef Name="Violation_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Documents">
+          <End Role="Driver" Type="Self.Driver" Multiplicity="*" />
+          <End Role="Automobile" Type="Self.Automobile" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DATABASE1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Automobile" EntityType="Self.Automobile" />
+          <EntitySet Name="Automobile_has_Violation" EntityType="Self.Automobile_has_Violation" />
+          <EntitySet Name="Driver" EntityType="Self.Driver" />
+          <EntitySet Name="Violation" EntityType="Self.Violation" />
+          <AssociationSet Name="FK__Automobile_has_V__5CD6CB2B" Association="Self.FK__Automobile_has_V__5CD6CB2B">
+            <End Role="Automobile" EntitySet="Automobile" />
+            <End Role="Automobile_has_Violation" EntitySet="Automobile_has_Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Automobil__Viola__5DCAEF64" Association="Self.FK__Automobil__Viola__5DCAEF64">
+            <End Role="Violation" EntitySet="Violation" />
+            <End Role="Automobile_has_Violation" EntitySet="Automobile_has_Violation" />
+          </AssociationSet>
+          <AssociationSet Name="Documents" Association="Self.Documents">
+            <End Role="Driver" EntitySet="Driver" />
+            <End Role="Automobile" EntitySet="Automobile" />
+          </AssociationSet>
+          <FunctionImport Name="seaq" ReturnType="Collection(DATABASE1Model.seaq_Result)">
+            <Parameter Name="Date_of_the_violation_start" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_of_the_violation_end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="seaq2" ReturnType="Collection(DATABASE1Model.seaq2_Result)">
+            <Parameter Name="Name_of_the_violation" Mode="In" Type="String" />
+            <Parameter Name="Brand_of_the_automobile" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="seaq_Result">
+          <Property Type="String" Name="State_number" Nullable="true" />
+          <Property Type="String" Name="Drivers_FIO" Nullable="true" />
+          <Property Type="String" Name="Brand" Nullable="true" />
+          <Property Type="DateTime" Name="Date_of_the_violation" Nullable="false" />
+          <Property Type="String" Name="Quontity" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="seaq2_Result">
+          <Property Type="String" Name="Drivers_FIO" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="Brand" Nullable="true" />
+          <Property Type="String" Name="State_number" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DATABASE1ModelContainer" CdmEntityContainer="DATABASE1Entities">
+          <EntitySetMapping Name="Automobile">
+            <EntityTypeMapping TypeName="DATABASE1Model.Automobile">
+              <MappingFragment StoreEntitySet="Automobile">
+                <ScalarProperty Name="Series_of_the_technical_passport" ColumnName="Series_of_the_technical_passport" />
+                <ScalarProperty Name="Number_of_the_technical_passport" ColumnName="Number_of_the_technical_passport" />
+                <ScalarProperty Name="Drivers_FIO" ColumnName="Drivers_FIO" />
+                <ScalarProperty Name="State_number" ColumnName="State_number" />
+                <ScalarProperty Name="Drivers_address" ColumnName="Drivers_address" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Engine_number" ColumnName="Engine_number" />
+                <ScalarProperty Name="Body_number" ColumnName="Body_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Automobile_has_Violation">
+            <EntityTypeMapping TypeName="DATABASE1Model.Automobile_has_Violation">
+              <MappingFragment StoreEntitySet="Automobile_has_Violation">
+                <ScalarProperty Name="Automobile_Number_of_the_technical_passport" ColumnName="Automobile_Number_of_the_technical_passport" />
+                <ScalarProperty Name="Automobile_Series_of_the_technical_passport" ColumnName="Automobile_Series_of_the_technical_passport" />
+                <ScalarProperty Name="Violation_Code" ColumnName="Violation_Code" />
+                <ScalarProperty Name="Date_of_the_violation" ColumnName="Date_of_the_violation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Driver">
+            <EntityTypeMapping TypeName="DATABASE1Model.Driver">
+              <MappingFragment StoreEntitySet="Driver">
+                <ScalarProperty Name="Series_of_the_drivers_license" ColumnName="Series_of_the_drivers_license" />
+                <ScalarProperty Name="Number_of_the_drivers_license" ColumnName="Number_of_the_drivers_license" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Violation">
+            <EntityTypeMapping TypeName="DATABASE1Model.Violation">
+              <MappingFragment StoreEntitySet="Violation">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Documents" TypeName="DATABASE1Model.Documents" StoreEntitySet="Documents">
+            <EndProperty Name="Driver">
+              <ScalarProperty Name="Series_of_the_drivers_license" ColumnName="Driver_Series_of_the_drivers_license" />
+              <ScalarProperty Name="Number_of_the_drivers_license" ColumnName="Driver_Number_of_the_drivers_license" />
+            </EndProperty>
+            <EndProperty Name="Automobile">
+              <ScalarProperty Name="Series_of_the_technical_passport" ColumnName="Automobile_Series_of_the_technical_passport" />
+              <ScalarProperty Name="Number_of_the_technical_passport" ColumnName="Automobile_Number_of_the_technical_passport" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="seaq" FunctionName="Хранилище DATABASE1Model.seaq">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATABASE1Model.seaq_Result">
+                <ScalarProperty Name="State_number" ColumnName="State_number" />
+                <ScalarProperty Name="Drivers_FIO" ColumnName="Drivers_FIO" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Date_of_the_violation" ColumnName="Date_of_the_violation" />
+                <ScalarProperty Name="Quontity" ColumnName="Quontity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="seaq2" FunctionName="Хранилище DATABASE1Model.seaq2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATABASE1Model.seaq2_Result">
+                <ScalarProperty Name="Drivers_FIO" ColumnName="Drivers_FIO" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="State_number" ColumnName="State_number" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

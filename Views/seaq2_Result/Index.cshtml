@@ -1,0 +1,23 @@
+﻿@model IEnumerable<WebApplication2.seaq2_Result>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<hr />
+<form action="/seaq2_Result/seaq2Query" class="form-horizontal">
+    <div class="form-group">
+        <label for="name_vio" class="control-label col-md-2">Name_of_the_violation</label>
+        <input type="text" name="name_vio" id="name_vio" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="brand_auto" class="control-label col-md-2">Brand_of_the_automobile</label>
+        <input type="text" name="brand_auto" id="brand_auto" class="form-control">
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Get" class="btn btn-default" />
+        </div>
+    </div>
+</form>
